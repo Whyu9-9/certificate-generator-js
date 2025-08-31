@@ -185,4 +185,3 @@ If you encounter any issues or have questions:
 ---
 
 **Happy Certificate Generating! 🎉**
-# certificate-generator-js
