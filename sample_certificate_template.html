@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Certificate Template</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 40px;
+                font-family: "Times New Roman", serif;
+                background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .certificate {
+                width: 800px;
+                height: 600px;
+                background: white;
+                border: 20px solid #2c3e50;
+                border-radius: 10px;
+                position: relative;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+            }
+
+            .border-pattern {
+                position: absolute;
+                top: 20px;
+                left: 20px;
+                right: 20px;
+                bottom: 20px;
+                border: 2px solid #34495e;
+                border-radius: 5px;
+            }
+
+            .logo {
+                font-size: 3rem;
+                margin-bottom: 20px;
+                color: #3498db;
+            }
+
+            .title {
+                font-size: 2.5rem;
+                font-weight: bold;
+                color: #2c3e50;
+                margin-bottom: 10px;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+                color: #7f8c8d;
+                margin-bottom: 40px;
+                font-style: italic;
+            }
+
+            .content {
+                font-size: 1.1rem;
+                color: #34495e;
+                margin-bottom: 30px;
+                line-height: 1.6;
+            }
+
+            .name-placeholder {
+                font-size: 2rem;
+                font-weight: bold;
+                color: #e74c3c;
+                margin: 20px 0;
+                min-height: 60px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-bottom: 2px solid #bdc3c7;
+                padding-bottom: 10px;
+                width: 80%;
+            }
+
+            .date {
+                font-size: 1rem;
+                color: #7f8c8d;
+                margin-top: 30px;
+            }
+
+            .signature-section {
+                display: flex;
+                justify-content: space-between;
+                width: 80%;
+                margin-top: 40px;
+            }
+
+            .signature {
+                text-align: center;
+            }
+
+            .signature-line {
+                width: 150px;
+                height: 2px;
+                background: #34495e;
+                margin: 10px auto;
+            }
+
+            .signature-name {
+                font-size: 0.9rem;
+                color: #7f8c8d;
+            }
+
+            .signature-title {
+                font-size: 0.8rem;
+                color: #95a5a6;
+            }
+
+            .watermark {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) rotate(-45deg);
+                font-size: 8rem;
+                color: rgba(52, 152, 219, 0.1);
+                font-weight: bold;
+                pointer-events: none;
+                z-index: -1;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="certificate">
+            <div class="border-pattern"></div>
+            <div class="watermark">CERTIFICATE</div>
+
+            <div class="logo">🏆</div>
+
+            <h1 class="title">Certificate of Achievement</h1>
+            <p class="subtitle">This is to certify that</p>
+
+            <div class="name-placeholder">[NAME WILL BE INSERTED HERE]</div>
+
+            <p class="content">
+                has successfully completed the required course of study<br />
+                and demonstrated exceptional skills and dedication<br />
+                in their field of expertise.
+            </p>
+
+            <div class="date">Awarded on: <span id="current-date"></span></div>
+
+            <div class="signature-section">
+                <div class="signature">
+                    <div class="signature-line"></div>
+                    <div class="signature-name">Dr. John Smith</div>
+                    <div class="signature-title">Course Director</div>
+                </div>
+                <div class="signature">
+                    <div class="signature-line"></div>
+                    <div class="signature-name">Jane Wilson</div>
+                    <div class="signature-title">Program Coordinator</div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Set current date
+            const today = new Date();
+            const options = { year: "numeric", month: "long", day: "numeric" };
+            document.getElementById("current-date").textContent =
+                today.toLocaleDateString("en-US", options);
+
+            // Instructions for converting to PDF
+            console.log("To convert this to PDF:");
+            console.log("1. Open this file in a web browser");
+            console.log("2. Press Ctrl+P (or Cmd+P on Mac)");
+            console.log('3. Select "Save as PDF"');
+            console.log("4. Save the file");
+            console.log(
+                "5. Use this PDF as your template in the certificate generator"
+            );
+        </script>
+    </body>
+</html>

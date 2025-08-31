@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Certificate Generator</title>
+        <link rel="stylesheet" href="styles.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1>🎓 Certificate Generator</h1>
+                <p>
+                    Upload your certificate template and generate personalized
+                    certificates
+                </p>
+            </header>
+
+            <main>
+                <div class="upload-section">
+                    <div class="upload-card">
+                        <h3>📄 Certificate Template</h3>
+                        <div class="file-upload" id="pdfUpload">
+                            <div class="upload-area">
+                                <div class="upload-icon">📄</div>
+                                <p>Click to upload PDF certificate template</p>
+                                <p class="file-info">or drag and drop here</p>
+                            </div>
+                            <input
+                                type="file"
+                                id="pdfFile"
+                                accept=".pdf"
+                                hidden
+                            />
+                        </div>
+                        <div
+                            class="file-preview"
+                            id="pdfPreview"
+                            style="display: none"
+                        >
+                            <p>
+                                ✅ Template uploaded:
+                                <span id="pdfFileName"></span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="upload-card">
+                        <h3>📊 Names List</h3>
+                        <div class="file-upload" id="csvUpload">
+                            <div class="upload-area">
+                                <div class="upload-icon">📊</div>
+                                <p>Click to upload CSV file with names</p>
+                                <p class="file-info">or drag and drop here</p>
+                            </div>
+                            <input
+                                type="file"
+                                id="csvFile"
+                                accept=".csv"
+                                hidden
+                            />
+                        </div>
+                        <div class="sample-download">
+                            <button id="downloadSampleCsv" class="sample-btn">
+                                📥 Download Sample CSV
+                            </button>
+                        </div>
+                        <div
+                            class="file-preview"
+                            id="csvPreview"
+                            style="display: none"
+                        >
+                            <p>
+                                ✅ Names uploaded:
+                                <span id="csvFileName"></span>
+                            </p>
+                            <p>Found <span id="nameCount">0</span> names</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3>⚙️ Settings</h3>
+                    <div class="setting-group">
+                        <label for="nameColumn">Name Column:</label>
+                        <select id="nameColumn">
+                            <option value="">Select column...</option>
+                        </select>
+                    </div>
+                    <div class="setting-group">
+                        <label for="fontSize">Font Size:</label>
+                        <input
+                            type="range"
+                            id="fontSize"
+                            min="12"
+                            max="72"
+                            value="24"
+                        />
+                        <span id="fontSizeValue">24</span>
+                    </div>
+                    <div class="setting-group">
+                        <label for="xPosition">X Position:</label>
+                        <input
+                            type="range"
+                            id="xPosition"
+                            min="0"
+                            max="800"
+                            value="300"
+                        />
+                        <span id="xPositionValue">300</span>
+                    </div>
+                    <div class="setting-group">
+                        <label for="yPosition">Y Position:</label>
+                        <input
+                            type="range"
+                            id="yPosition"
+                            min="0"
+                            max="600"
+                            value="300"
+                        />
+                        <span id="yPositionValue">300</span>
+                    </div>
+                </div>
+
+                <div class="preview-section">
+                    <h3>👁️ Preview</h3>
+                    <div class="preview-container">
+                        <canvas
+                            id="previewCanvas"
+                            width="800"
+                            height="600"
+                        ></canvas>
+                        <div class="coordinate-info" id="coordinateInfo">
+                            <p>Click on the preview to set position</p>
+                            <p>
+                                Current: X: <span id="currentX">300</span>, Y:
+                                <span id="currentY">300</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="preview-controls">
+                        <div class="preview-name-section">
+                            <label for="previewName">Preview Name:</label>
+                            <input
+                                type="text"
+                                id="previewName"
+                                placeholder="Enter name to preview"
+                                value="John Doe"
+                            />
+                        </div>
+                        <button id="updatePreview">Update Preview</button>
+                        <button id="syncPreviewName" class="sync-btn">
+                            Sync with First Name
+                        </button>
+                    </div>
+                </div>
+
+                <div class="generate-section">
+                    <button id="generateBtn" class="generate-btn" disabled>
+                        🚀 Generate Certificates
+                    </button>
+                    <div class="requirements-check" id="requirementsCheck">
+                        <p>✅ PDF Template uploaded</p>
+                        <p>✅ CSV file uploaded</p>
+                        <p>✅ Name column selected</p>
+                        <p>✅ Names found in CSV</p>
+                    </div>
+                    <div
+                        class="progress-container"
+                        id="progressContainer"
+                        style="display: none"
+                    >
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <p id="progressText">Generating certificates...</p>
+                    </div>
+                </div>
+            </main>
+
+            <footer>
+                <p>Made with ❤️ for easy certificate generation</p>
+            </footer>
+        </div>
+
+        <script src="script.js"></script>
+    </body>
+</html>
